@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markwise | Brand Governance</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo">Mark<span>wise.</span></div>
+  <div class="menu-label">WORKSPACE</div>
+
+  <nav class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">▦ Dashboard</button>
+    <button onclick="showPage('guidelines',this)">▤ Brand Guidelines</button>
+    <button onclick="showPage('facts',this)">◈ Approved Facts</button>
+    <button onclick="showPage('review',this)">✎ Content Review</button>
+    <button onclick="showPage('history',this)">◷ Review History</button>
+    <button onclick="showPage('insights',this)">▥ Insights</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <p>MARKWISE DEMO</p>
+    <p style="margin-top:8px">NovaLearn Workspace</p>
+  </div>
+</aside>
+
+<div class="main">
+
+<header class="topbar">
+  <div>
+    <strong>NovaLearn Workspace</strong><br>
+    <small>Brand Governance Platform</small>
+  </div>
+  <div class="profile">● Demo Admin</div>
+</header>
+
+<main class="content">
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+  <div class="heading">
+    <h1>Dashboard</h1>
+    <p>Welcome to Markwise. Monitor your brand content and reviews.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <small>Total Reviews</small>
+      <h2 id="totalReviews">0</h2>
+      <p>Content submissions</p>
+    </div>
+
+    <div class="card">
+      <small>Issues Found</small>
+      <h2 id="totalIssues">0</h2>
+      <p>Detected rule violations</p>
+    </div>
+
+    <div class="card">
+      <small>Approved Reviews</small>
+      <h2 id="approvedReviews">0</h2>
+      <p>Reviewer approvals</p>
+    </div>
+
+    <div class="card">
+      <small>Rejected Reviews</small>
+      <h2 id="rejectedReviews">0</h2>
+      <p>Reviewer rejections</p>
+    </div>
+
+    <div class="card">
+      <small>Pending Reviews</small>
+      <h2 id="pendingReviews">0</h2>
+      <p>Awaiting reviewer decision</p>
+    </div>
+
+    <div class="card">
+      <small>Brand Rules</small>
+      <h2 id="totalRules">0</h2>
+      <p>Configured demo rules</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>Recent Activity</h3>
+      <div id="recentActivity" class="empty">
+        No reviews yet. Submit your first content.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Brand Protection</h3>
+
+      <div class="item">
+        <strong>Brand terminology</strong>
+        <p>Use learners instead of customers.</p>
+      </div>
+
+      <div class="item">
+        <strong>Approved claims</strong>
+        <p>Use verified facts only.</p>
+      </div>
+
+      <div class="item">
+        <strong>Brand voice</strong>
+        <p>Keep communication professional and friendly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- GUIDELINES -->
+<section id="guidelines" class="page">
+  <div class="heading">
+    <h1>Brand Guidelines</h1>
+    <p>Create and manage rules that NovaLearn content creators must follow.</p>
+  </div>
+
+  <div class="panel">
+    <h3 id="guidelineFormTitle">Add a Brand Rule</h3>
+
+    <form id="guidelineForm">
+
+      <label for="ruleTitle">Rule Name</label>
+      <input type="text" id="ruleTitle"
+        placeholder="Example: Terminology Rule" required>
+
+      <label for="ruleDescription">Rule Description</label>
+      <textarea id="ruleDescription"
+        placeholder="Explain what content creators must follow"
+        required></textarea>
+
+      <label for="ruleCategory">Category</label>
+      <select id="ruleCategory" required>
+        <option value="Terminology">Terminology</option>
+        <option value="Tone">Tone</option>
+        <option value="Prohibited Claims">Prohibited Claims</option>
+        <option value="Visual Identity">Visual Identity</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="ruleSeverity">Severity</label>
+      <select id="ruleSeverity" required>
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+
+      <label for="ruleKeyword">Trigger Word or Phrase</label>
+      <input type="text" id="ruleKeyword"
+        placeholder="Example: customers" required>
+
+      <label for="ruleCorrection">Suggested Replacement</label>
+      <input type="text" id="ruleCorrection"
+        placeholder="Example: learners">
+
+      <button type="submit" class="primary" id="saveRuleButton">
+        Add Rule
+      </button>
+
+      <button type="button" class="secondary"
+        id="cancelEditButton" style="display:none"
+        onclick="cancelRuleEdit()">
+        Cancel Edit
+      </button>
+
+      <p id="guidelineMessage"></p>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>Approved Brand Rules (<span id="guidelineCount">5</span>)</h3>
+    <div id="guidelineList"></div>
+  </div>
+</section>
+<!-- APPROVED FACTS -->
+
+<!-- APPROVED FACTS -->
+<section id="facts" class="page">
+  <div class="heading">
+    <h1>Approved Facts</h1>
+    <p>Verified information that can be used in company content.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Add an Approved Fact</h3>
+
+    <form id="factForm">
+      <div class="form-group">
+        <label for="factTitle">Fact Title</label>
+        <input
+          type="text"
+          id="factTitle"
+          placeholder="e.g. Customer Support"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="factDescription">Fact Description</label>
+        <textarea
+          id="factDescription"
+          placeholder="Enter the verified company information..."
+          rows="3"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="factSource">Source / Evidence</label>
+        <input
+          type="text"
+          id="factSource"
+          placeholder="e.g. Official company document"
+          required
+        >
+      </div>
+
+      <button type="submit" id="saveFactButton">
+        + Add Approved Fact
+      </button>
+
+      <button
+        type="button"
+        id="cancelFactEditButton"
+        onclick="cancelFactEdit()"
+        style="display:none"
+      >
+        Cancel Edit
+      </button>
+
+      <p id="factMessage"></p>
+    </form>
+  </div>
+
+  <div class="panel">
+    <h3>NovaLearn Verified Information</h3>
+    <p id="factCount">0 approved facts</p>
+    <div id="factList"></div>
+
+    <p style="font-size:12px;color:#8290a7;margin-top:17px">
+      Note: These are fictional demonstration facts, not real company claims.
+    </p>
+  </div>
+</section>
+
+<!-- CONTENT REVIEW -->
+<section id="review" class="page">
+  <div class="heading">
+    <h1>Content Review</h1>
+    <p>Check content against the configured NovaLearn demo rules.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Submit Your Content</h3>
+
+    <p style="font-size:13px;color:#758199">
+      Paste your marketing copy, social media post or other text below.
+    </p>
+
+    <textarea id="contentInput"
+      placeholder="Example: We guarantee 60% faster onboarding for all our customers..."></textarea>
+
+    <button class="primary" onclick="checkContent()">
+      Check Content →
+    </button>
+
+    <div id="results"></div>
+  </div>
+
+  <div class="panel" id="decisionPanel" style="display:none">
+    <h3>Reviewer Decision</h3>
+
+    <p>Review the content and its findings before making a decision.</p>
+
+    <button class="primary" onclick="reviewDecision('Approved')">
+      ✓ Approve Content
+    </button>
+
+    <button onclick="reviewDecision('Rejected')">
+      ✕ Reject Content
+    </button>
+
+    <p id="decisionMessage"></p>
+  </div>
+</section>
+
+
+<!-- HISTORY -->
+<section id="history" class="page">
+  <div class="heading">
+    <h1>Review History</h1>
+    <p>Previously submitted content and its review status.</p>
+  </div>
+
+  <div class="panel">
+    <h3>Previous Reviews</h3>
+    <div id="historyList" class="empty">
+      No review history available yet.
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights" class="page">
+  <div class="heading">
+    <h1>Insights</h1>
+    <p>Understand the patterns in your content reviews.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <small>Reviews Completed</small>
+      <h2 id="insightReviews">0</h2>
+      <p>Submissions checked</p>
+    </div>
+
+    <div class="card">
+      <small>Total Issues</small>
+      <h2 id="insightIssues">0</h2>
+      <p>Configured rules triggered</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Detected Rule Patterns</h3>
+    <div id="rulePatterns" class="empty">
+      Submit content to generate review insights.
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:#8290a7">
+    Insights are based on this demo application's local review history.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  Markwise © 2026 · Protecting Your Brand Identity
+</footer>
+
+</div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
